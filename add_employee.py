@@ -1,26 +1,31 @@
-# add_employee.py
-
 import tkinter as tk
 from tkinter import messagebox
 from employee_data import add_employee, calculate_net_salary
 
 def open_add_employee():
     def save_employee():
-        employee = {
-            "emp_id": emp_id_entry.get().strip(),
-            "name": name_entry.get().strip(),
-            "position": position_entry.get().strip(),
-            "address": address_entry.get().strip(),
-            "phone": phone_entry.get().strip(),
-            "salary": salary_entry.get().strip(),
-            "pf": pf_entry.get().strip(),
-            "conveyance": conveyance_entry.get().strip(),
-            "medical": medical_entry.get().strip(),
-        }
-        employee["net_salary"] = calculate_net_salary(employee)
-        add_employee(employee)
-        messagebox.showinfo("Success", "Employee added successfully!")
-        root.destroy()
+        try:
+            employee = {
+                "emp_id": emp_id_entry.get().strip(),
+                "name": name_entry.get().strip(),
+                "position": position_entry.get().strip(),
+                "address": address_entry.get().strip(),
+                "phone": phone_entry.get().strip(),
+                "salary": salary_entry.get().strip(),
+                "pf": pf_entry.get().strip(),
+                "conveyance": conveyance_entry.get().strip(),
+                "medical": medical_entry.get().strip(),
+            }
+            
+            # Print the employee data for debugging
+            print(employee)
+            
+            employee["net_salary"] = calculate_net_salary(employee)
+            add_employee(employee)
+            messagebox.showinfo("Success", "Employee added successfully!")
+            root.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to add employee: {e}")
 
     root = tk.Toplevel()
     root.title("Add Employee")

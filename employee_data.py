@@ -39,23 +39,15 @@ def modify_employee(emp_id, new_data):
     conn.commit()
     return cursor.rowcount > 0
 
-def get_employees():
-    cursor.execute("SELECT * FROM employees")
-    rows = cursor.fetchall()
-    employees = []
-    for row in rows:
-        employees.append({
-            "emp_id": row[0],
-            "name": row[1],
-            "position": row[2],
-            "address": row[3],
-            "phone": row[4],
-            "salary": row[5],
-            "pf": row[6],
-            "conveyance": row[7],
-            "medical": row[8]
-        })
-    return employees
+def get_employees(): 
+    cursor.execute("SELECT * FROM employees") 
+    rows = cursor.fetchall() 
+    employees = [] 
+    for row in rows: 
+        employee = { "emp_id": row[0], "name": row[1], "position": row[2], "address": row[3], "phone": row[4], "salary": row[5], "pf": row[6], "conveyance": row[7], "medical": row[8] } # Calculate net salary 
+        employee["net_salary"] = calculate_net_salary(employee) 
+        employees.append(employee) 
+        return employees
 
 def calculate_net_salary(employee):
     salary = float(employee["salary"])
